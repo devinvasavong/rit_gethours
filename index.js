@@ -8,15 +8,19 @@ const getHours = async () => {
     let $ = cheerio.load(body)
 
     const timeArray = new Object()
-    const storeArray = new Object()
+    const stores = new Object()
+    let day = ""
 
     $('.view-content .panel-default .panel-body').each((i, el) => {
+        if(!day) day = $(el).text().trim().split("        ")[0]
         timeArray[i] = $(el).text().trim().split("        ")[1]
     })
 
     $('.view-content .hours-title ').each((i, el) => {
-        storeArray[$(el).text().trim()] = timeArray[i]
+        stores[$(el).text().trim()] = timeArray[i]
     })
 
-    return storeArray
+    return { day, stores }
 }
+
+console.log(getHours())
